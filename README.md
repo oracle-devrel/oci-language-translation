@@ -1,4 +1,4 @@
-# OCI Language and Batch Translation 
+# OCI Language and Batch Translation
 
 [![License: UPL](https://img.shields.io/badge/license-UPL-green)](https://img.shields.io/badge/license-UPL-green) [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=oracle-devrel_oci-language-translation)](https://sonarcloud.io/dashboard?id=oracle-devrel_oci-language-translation)
 
@@ -20,7 +20,11 @@ These are the following available features:
 
 With all these features available, the Language service automates sophisticated text analysis, saving you time and resources.
 
-We will use OCI's Python SDK to access OCI Language, and once we have some code ready, we will invoke it in a pipeline to create an AI-Enhanced Wall Street Market Analyzer.
+We will use OCI's Python SDK to access OCI Language, and once we have some code ready, we will invoke it in a pipeline to create an AI-Enhanced Wall Street Market Analyzer. This POC aims to teach that, through data, any type of project is achievable with AI, facilitated by services like OCI Language and a bit of creativity.
+
+This idea realies on the concept about group decisions: it's been statistically proven that the most picked choice by a group of people is often the correct one. Based on this, if I wanted to short or long a stock, I would need to listen to what people are saying: if people are clearly having a negative consensus on a day, perhaps that day isn't the best day to buy, and viceversa. This automated averaged sentiment analyzer takes Tweets from the official Twitter API (querying by stock $NAME on search results), batch-analyzes the sentiment of these tweets, and produces a positive / negative recommendation.
+
+You can use this recommendation to assist your buy/sell options on specific stocks.
 
 There's the possibility to create your own custom models for Text Classification and Named Entity Recognition, although we will not explore their benefits in this use case. [Have a look here](https://docs.oracle.com/en-us/iaas/language/using/custom-models.htm#custom-models) if you're interested.
 
@@ -33,42 +37,64 @@ There's the possibility to create your own custom models for Text Classification
 - [Conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html)
 - [OCI SDK](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm)
 
+Follow these links below to generate a config file and a key pair in your ~/.oci directory:
+
+- [SDK Config](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm)
+- [API Signing Key](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm)
+- [SDK CLI Installation](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm#configfile)
+
+After completion, you should have following 2 things in your ~/.oci directory:
+
+- A config file(where key file point to private key:key_file=~/.oci/oci_api_key.pem)
+- A key pair named oci_api_key.pem and oci_api_key_public.pem
+- Now make sure you change the reference of key file in config file (where key file point to private key:key_file=/YOUR_DIR_TO_KEY_FILE/oci_api_key.pem)
+
 First, we install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-We can run some of our code: 
+After, you will have two scripts:
 
-After, we can run `data_generator.py`:
-
-```bash
-cd scripts/
-python data_generator.py
-```
+- `language.py`: contains the implementation of using every service available in OCI Language (so far).
+- `market_analysis.py`: contains the use case code. Firstly, it will take a JSON-formatted list of tweets (you can connect any data source or comment from any user), translate them into English first, and once it has them in the same language, it will perform an averaged sentiment analysis of those tweets.
 
 The console will ask for how many synthetic users' data you want. For testing purposes, this can be any small value that will let us test; for your own use case in practice, your only job is to select which data will go into the vector database, and in which form (JSON, structured data, raw text... and their properties (if any)).
 
-## 1. Create data sources
+## 1. Test all services
 
-## 2. Create endpoint to consume data
+You can execute this following command:
 
-## 3. Create agent to point to data source and identity domain
+```bash
+cd scripts/
+python language.py
+```
 
-## 4. Talk to your new agent
+It will run all available features in OCI Language against the string found in line 19:
+
+```python
+test_string = "Oracle Cloud Infrastructure is built for enterprises seeking higher performance, lower costs, and easier cloud migration for their applications. Customers choose Oracle Cloud Infrastructure over AWS for several reasons: First, they can consume cloud services in the public cloud or within their own data center with Oracle Dedicated Region Cloud@Customer. Second, they can migrate and run any workload as is on Oracle Cloud, including Oracle databases and applications, VMware, or bare metal servers. Third, customers can easily implement security controls and automation to prevent misconfiguration errors and implement security best practices. Fourth, they have lower risks with Oracle’s end-to-end SLAs covering performance, availability, and manageability of services. Finally, their workloads achieve better performance at a significantly lower cost with Oracle Cloud Infrastructure than AWS. Take a look at what makes Oracle Cloud Infrastructure a better cloud platform than AWS."
+```
+
+You can replace this with whichever test data string you want to apply OCI Language.
+
+## 2. Run stock market sentiment analyzer
+
+To run this Proof-of-concept market sentiment analyzer, just run the following command. It will assume that you have a JSON list of tweets in data/ and expect you to reference these files where you have data in the script.
+
+```bash
+cd scripts/
+python market_analysis.py
+```
 
 ## Demo
 
-[OCI Vision Overview - Exploring the Service](https://www.youtube.com/watch?v=eyJm7OlaRBk&list=PLPIzp-E1msraY9To-BB-vVzPsK08s4tQD&index=4)
+TODO
 
 ## Tutorial
 
-Here’s an use case being solved with OCI Vision + Python:
-
-[App Pattern: OCI Vision Customized Object Detector in Python](https://www.youtube.com/watch?v=B9EmMkqnoGQ&list=PLPIzp-E1msraY9To-BB-vVzPsK08s4tQD&index=2)
-
-[This is a tutorial](https://docs.oracle.com/en/learn/oci-opensearch/index.html#introduction) about OCI OpenSearch if you're interested in learning more about vectorization, connecting to the cluster, ingesting data, searching for data and visualizing it.
+TODO
 
 ## Physical Architecture
 
