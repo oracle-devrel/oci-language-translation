@@ -1,0 +1,24 @@
+auto - Automatically detect language
+ar - Arabic
+pt-BR - Brazilian Portuguese
+fr-CA - Canadian French
+cs - Czech
+da - Danish
+nl - Dutch
+en - English
+fi - Finnish
+fr - French
+de - German
+el - Greek
+he - Hebrew
+it - Italian
+ja - Japanese
+ko - Korean
+no - Norwegian
+pl - Polish
+ro - Romanian
+zh-CN - Simplified Chinese
+es - Spanish
+sv - Swedish
+zh-TW - Traditional Chinese
+tr - Turkish
