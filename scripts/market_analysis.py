@@ -50,12 +50,13 @@ with open('../data/translated_tweets.json', 'r', encoding='utf-8') as file:
 
     for element in data:
         tweet = element['tweet']
-        
+        print(tweet)
         # Create a text document for the tweet
-        text_document = create_text_document(key_="Example", language_code_="auto", data=tweet) # autodetect language
-
+        text_document = create_text_document(key_="Example", language_code_="en", data=tweet) # autodetect language
+        print(text_document)
         # Grab all responses by the AI client  
         sentiment_response = sentiment_analysis(language_client, text_document)
+        print(sentiment_response)
         # you could search for specific phrases, like $NVDA using key phrase extraction
         key_phrase_response = key_phrase_extraction(language_client, text_document)
         # you could filter only tweets that mention specific orgs, e.g. "Text: Nvidia Type: ORGANIZATION"
@@ -64,9 +65,10 @@ with open('../data/translated_tweets.json', 'r', encoding='utf-8') as file:
         text_classification_response = text_classification(language_client, text_document)
 
         print_all_responses(sentiment_response, key_phrase_response, named_entity_response, text_classification_response)
-
         for i in range(0, len(sentiment_response.documents)):
+            print(sentiment_response.documents[i])
             for j in range(0, len(sentiment_response.documents[i].aspects)):
+                #print(sentiment_response.documents[i].sentiment)
                 sentiment = sentiment_response.documents[i].aspects[j].sentiment
                 sentiments.append(sentiment)
                 print("Sentiment: {}".format(sentiment))
