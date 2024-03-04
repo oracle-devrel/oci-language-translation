@@ -40,7 +40,8 @@ def sentiment_analysis(AI_client, text_document):
     try:
         # Run sentiment analysis on text_document
         detect_language_sentiments_response = AI_client.batch_detect_language_sentiments(
-            batch_detect_language_sentiments_details=oci.ai_language.models.BatchDetectLanguageSentimentsDetails(documents=[text_document])
+            batch_detect_language_sentiments_details=oci.ai_language.models.BatchDetectLanguageSentimentsDetails(documents=[text_document]),
+            level=["SENTENCE"]
         )
         return detect_language_sentiments_response.data
 
