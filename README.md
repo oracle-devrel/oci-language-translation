@@ -90,7 +90,7 @@ python market_analysis.py
 
 ## Demo
 
-TODO
+[Watch the demo here](https://www.youtube.com/watch?v=0wqNhZHSs9Y&list=PLPIzp-E1msraY9To-BB-vVzPsK08s4tQD&index=14)
 
 ## Tutorial
 
